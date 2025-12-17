@@ -57,6 +57,8 @@ namespace CrudFormsDotNet
             contatoDao.Adicionar(contato);
             MessageBox.Show("Contato salvo com sucesso!");
 
+            ListarComboBox();
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -149,8 +151,6 @@ namespace CrudFormsDotNet
 
             ContatoDAO dao = new ContatoDAO();
             dao.Atualizar(contato);
-
-            MessageBox.Show("Contato atualizado com sucesso!");
 
             // Atualiza ComboBox e Grid
             ListarComboBox();
