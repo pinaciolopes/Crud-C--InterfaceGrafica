@@ -28,19 +28,19 @@ namespace CrudFormsDotNet
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtNome.Text))
+            if (string.IsNullOrWhiteSpace(txtNome.Text))
             {
                 MessageBox.Show("Informe o nome");
                 return;
             }
 
-            if (string.IsNullOrEmpty(txtEmail.Text))
+            if (string.IsNullOrWhiteSpace(txtEmail.Text))
             {
                 MessageBox.Show("Informe o Email");
                 return;
             }
 
-            if (string.IsNullOrEmpty(txtTelefone.Text))
+            if (string.IsNullOrWhiteSpace(txtTelefone.Text))
             {
                 MessageBox.Show("Informe o telefone");
                 return;
@@ -55,9 +55,8 @@ namespace CrudFormsDotNet
             Contato contato = new Contato(0, nome, telefone, email);
 
             contatoDao.Adicionar(contato);
-            MessageBox.Show("Contato salvo com sucesso!");
-
             ListarComboBox();
+            LimparCamposEditar();
 
         }
 
@@ -69,11 +68,21 @@ namespace CrudFormsDotNet
         private void btnListar_Click(object sender, EventArgs e)
         {
 
+
             ContatoDAO contatoDao = new ContatoDAO();
 
             contatoDao.ListarTodos();
             dataGridContatos.DataSource = contatoDao.ListarTodos();
+
+            if (dataGridContatos.Rows.Cast<DataGridViewRow>()
+            .All(r => r.IsNewRow))
+            {
+                MessageBox.Show("Nenhum contato cadastrado.");
+            }
+
+            ListarComboBox();
         }
+
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -97,7 +106,7 @@ namespace CrudFormsDotNet
             }
             else
             {
-                MessageBox.Show("Selecione um contato para editar.");
+                MessageBox.Show("Selecione um contato para deletar.");
             }
 
 
@@ -134,12 +143,21 @@ namespace CrudFormsDotNet
                 MessageBox.Show("Selecione um contato");
                 return;
             }
-
-            if (string.IsNullOrWhiteSpace(txtEditarNome.Text) ||
-                string.IsNullOrWhiteSpace(txtEditarEmail.Text) ||
-                string.IsNullOrWhiteSpace(txtEditarTelefone.Text))
+            if (string.IsNullOrWhiteSpace(txtEditarNome.Text))
             {
-                MessageBox.Show("Preencha todos os campos");
+                MessageBox.Show("Informe o nome");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtEditarEmail.Text))
+            {
+                MessageBox.Show("Informe o Email");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtEditarTelefone.Text))
+            {
+                MessageBox.Show("Informe o telefone");
                 return;
             }
 
@@ -154,11 +172,19 @@ namespace CrudFormsDotNet
 
             // Atualiza ComboBox e Grid
             ListarComboBox();
+            LimparCamposEditar();
         }
 
         private void cbmDeletar_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+        private void LimparCamposEditar()
+        {
+            txtEditarNome.Clear();
+            txtEditarEmail.Clear();
+            txtEditarTelefone.Clear();
+            cbmEditar.SelectedIndex = -1; // limpa seleção
         }
 
     }
