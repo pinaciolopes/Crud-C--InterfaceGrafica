@@ -25,6 +25,3 @@ jobs:
 
     - name: Build Release
       run: msbuild CrudFormsDotNet.sln /p:Configuration=Release
-
-        name: MSIX Package
-        path: ${{ env.Wap_Project_Directory }}\AppPackages
