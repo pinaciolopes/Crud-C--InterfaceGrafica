@@ -13,6 +13,16 @@ Este projeto é uma aplicação CRUD (Create, Read, Update, Delete) desenvolvida
 	•	ADO.NET
   
 	•	Git e GitHub
+	
+🧰 Ferramentas necessárias
+
+Visual Studio (para executar e editar o projeto)
+
+XAMPP (para gerenciar o servidor MySQL)
+
+MySQL (banco de dados)
+
+Git (opcional, para versionamento)
 
 📌 Funcionalidades
 
