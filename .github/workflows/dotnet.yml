@@ -1,0 +1,24 @@
+name: CI WinForms .NET Framework
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout do código
+      uses: actions/checkout@v4
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Restaurar dependências (NuGet)
+      run: nuget restore CrudFormsDotNet.sln
+
+    - name: Build da Solution
+      run: msbuild CrudFormsDotNet.sln /p:Configuration=Release
