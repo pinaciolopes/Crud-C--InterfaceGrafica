@@ -8,20 +8,30 @@ on:
 
 jobs:
   build:
+
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+
     runs-on: windows-latest
+
+    env:
+      Solution_Name: CrudFormsDotNet.sln
 
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
+    # Setup MSBuild (necessário para WinForms / .NET Framework)
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
+    # Restore da solution
     - name: Restore
-      run: msbuild CrudFormsDotNet.sln /t:Restore
+      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=${{ matrix.configuration }}
 
-    - name: Build Debug
-      run: msbuild CrudFormsDotNet.sln /p:Configuration=Debug
-
-    - name: Build Release
-      run: msbuild CrudFormsDotNet.sln /p:Configuration=Release
+    # Build Debug / Release
+    - name: Build
+      run: msbuild $env:Solution_Name /p:Configuration=${{ matrix.configuration }}
